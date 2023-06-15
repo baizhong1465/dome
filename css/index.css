@@ -1,0 +1,92 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  outline: none;
+  color: #000;
+}
+
+ul li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.bg3 .FunctionModule {
+  position: relative;
+  top: 40px;
+  width: 650px;
+  height: 415px;
+  overflow-y: auto;
+
+  /* background-color: aquamarine; */
+}
+
+.bg3 .FunctionModule::-webkit-scrollbar {
+  width: 0px;
+}
+
+.bg3 .FunctionModule .top {}
+
+.bg3 .FunctionModule .top li {
+  margin: 10px 25px 40px;
+  background-color: #EBEBEB;
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  border-radius: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color .35s;
+  font-size: 19px;
+
+}
+
+.bg3 .FunctionModule .top li:hover {
+  background-color: #CDCDCD;
+}
+
+.bg3 .FunctionModule .top li a {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.bg3 .FunctionModule .top li .iconfont {
+  width: 26px;
+  height: 26px;
+  margin-top: -13px;
+  margin-left: -13px;
+  border-radius: 0;
+  font-size: 26px;
+  margin: 0 auto;
+}
+
+.bg3 .FunctionModule .top .topButton {
+  position: relative;
+  top: 17px;
+}
+
+.bg3 .FunctionModule .top .topButton button {
+  border-radius: 15px;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  outline: none;
+  border: none;
+
+  font-size: 40px;
+
+}
+
+.bg3 .FunctionModule .top .topButton:hover button {
+  background-color: #CDCDCD;
+}

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="lib/vue.next.js"></script>
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="./icon/iconfont.css">
+  <title>第八小组</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+
+
+    .bg {
+      background: url(./image/Default1_Pre.jpg) no-repeat;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      -webkit-background-size: cover;
+      -o-background-size: cover;
+      background-position: center 0;
+      position: absolute;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+
+    }
+
+    .bg2 {
+      background-size: 120%;
+    }
+
+    .bg {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .searchTerms {
+      margin-top: -316px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      /* display: none; */
+    }
+
+    .searchTerms .datalist {
+      animation: delayedFadeIn 2s;
+      color: #fff;
+      font-size: 24px;
+      margin-bottom: 24px;
+      transition: 0.2s linear;
+      z-index: 100;
+
+    }
+
+    .searchTerms .datalist:hover {
+      font-size: 28px;
+    }
+
+    .searchTerms .inputCustom {
+      outline: none;
+      border: none;
+      opacity: 0.8;
+      width: 230px;
+      height: 43px;
+      outline: 0;
+      padding: 0 20px;
+      color: inherit;
+      background-color: transparent;
+      font-size: 14px;
+      font-family: var(--fonts-light);
+      text-align: center;
+      border-radius: 21px;
+
+      background: rgba(255, 255, 255, 0.2);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.2);
+      transition: 0.2s linear;
+      box-shadow: #232323 0px 0px 10px;
+    }
+
+    .searchTerms .inputCustom:hover {
+      width: 600px;
+      color: #93979A;
+      background-color: #F6F9FA;
+    }
+
+    .searchTerms .inputCustom2 {
+      outline: none;
+      border: none;
+      width: 600px;
+      height: 43px;
+      padding: 0 20px;
+      color: inherit;
+      font-size: 14px;
+      font-family: var(--fonts-light);
+      text-align: center;
+      border-radius: 21px;
+      color: #98999A;
+      box-shadow: #232323 0px 0px 10px;
+      z-index: 1;
+    }
+
+    .bg .wh100 {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      scroll-snap-type: y mandatory;
+    }
+
+    .bg .wh100active {
+      width: 100%;
+      height: 145%;
+      background: rgba(255, 255, 255, 0.2);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.2);
+      transition: 0.2s linear;
+      box-shadow: #232323 0px 0px 10px;
+
+    }
+
+    .bg .searchTerms .icon-sousuo {
+      border: none;
+      background-color: transparent;
+      outline: none;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      /* background-color: #93979A; */
+      position: relative;
+      top: 0px;
+      left: -40px;
+    }
+
+    .bg .searchTerms .icon-sousuo:hover {
+      background-color: #f4f4f4;
+      box-shadow: #232323 0px 0px 10px;
+    }
+
+    .bg3 {
+      background: rgba(255, 255, 255, 0.2);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.2);
+      transition: 0.2s linear;
+      box-shadow: #232323 0px 0px 10px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <!-- <div id="bg"> -->
+  <div id="box">
+    <div :class="inputCustom1 === 1 ? 'bg' : 'bg bg2' " @mousedown="FunctionModuleShow">
+      <div :class="inputCustom1 === 1 ? 'searchTerms wh100' : 'searchTerms wh100active' "
+        @click.self="searchTermsClickOut">
+        <div class="datalist" @click.self="searchTermsClickOut">{{times}}</div>
+        <form action="http://www.baidu.com/baidu" target="_blank">
+          <input name="word" type="text" placeholder="搜索" :class="inputCustom1 === 1 ? 'inputCustom' : 'inputCustom2' "
+            @click.self="searchTermsClick" v-model="mytext">
+          <button @click="searchTermsUp" :class="inputCustom1 === 1 ? '' : 'iconfont icon-sousuo' " value="百度搜索"
+            type="submit"></button>
+        </form>
+      </div>
+    </div>
+
+    <div class="bg bg2 bg3" v-show="isShow" @click.self="isShow=false">
+      <div class="FunctionModule">
+        <ul class="top" @click.self="isShow=false">
+          <li v-for="(item,index) in changelist" :key="item.id">
+            <a :href="item.href" target="_blank">
+              <div :class="item.iconfont ">
+              </div>
+              <div>
+                {{item.name}}
+              </div>
+            </a>
+          </li>
+
+          <li class="topButton">
+            <button @click="topButtonAdd" :disabled="changelist.length===datalist.length">+</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <script>
+    var obj = {
+      data() {
+        return {
+          isShow: false,
+          times: "",
+          inputCustom1: 1,
+          mytext: localStorage.getItem("username"),
+          isDisable: 0,
+          isDisable2: 0,
+          changelist: [
+            {
+              id: 1,
+              iconfont: "iconfont icon-shuyi_fanyi-36",
+              href: "https://zaiwen.top/chat-research#/home",
+              name: "GPT"
+            },
+            {
+              id: 2,
+              iconfont: "iconfont icon-a-bijibenbiji",
+              href: "https://map.baidu.com/",
+              name: "笔记"
+            },
+            {
+              id: 3,
+              iconfont: "iconfont icon-tupianbizhi",
+              href: "https://www.pexels.com/zh-cn/",
+              name: "图片"
+            },
+            {
+              id: 4,
+              iconfont: "iconfont icon-yunpan",
+              href: "https://pan.baidu.com/disk/main#/index?category=all",
+              name: "云盘"
+            },
+            {
+              id: 5,
+              iconfont: "iconfont icon-youxiang",
+              href: "https://airportal.cn/",
+              name: "快传"
+            },
+            {
+              id: 6,
+              iconfont: "iconfont icon-yinle",
+              href: "https://mail.qq.com/",
+              name: "QQ邮箱"
+            },
+
+          ],
+          datalist: [
+            {
+              id: 1,
+              iconfont: "iconfont icon-shuyi_fanyi-36",
+              href: "https://fanyi.baidu.com/",
+              name: "翻译"
+            },
+            {
+              id: 2,
+              iconfont: "iconfont icon-ditu",
+              href: "https://map.baidu.com/",
+              name: "地图"
+            },
+            {
+              id: 3,
+              iconfont: "iconfont icon-tupianbizhi",
+              href: "https://www.pexels.com/zh-cn/",
+              name: "图片"
+            },
+            {
+              id: 4,
+              iconfont: "iconfont icon-yunpan",
+              href: "https://pan.baidu.com/disk/main#/index?category=all",
+              name: "云盘"
+            },
+            {
+              id: 5,
+              iconfont: "iconfont icon-youxiang",
+              href: "https://airportal.cn/",
+              name: "快传"
+            },
+            {
+              id: 6,
+              iconfont: "iconfont icon-yinle",
+              href: "https://mail.qq.com/",
+              name: "QQ邮箱"
+            },
+            {
+              id: 7,
+              iconfont: "iconfont icon-zhaopian",
+              href: "https://music.163.com/",
+              name: "云音乐"
+            },
+            {
+              id: 8,
+              iconfont: "iconfont icon-bilibili",
+              href: "https://www.bilibili.com/",
+              name: "哔哩哔哩"
+            },
+            {
+              id: 9,
+              iconfont: "iconfont icon-bilibili",
+              href: "https://www.bilibili.com/",
+              name: "测试1"
+            },
+            {
+              id: 10,
+              iconfont: "iconfont icon-bilibili",
+              href: "https://www.bilibili.com/",
+              name: "测试2"
+            },
+            {
+              id: 11,
+              iconfont: "iconfont icon-bilibili",
+              href: "https://www.bilibili.com/",
+              name: "测试3"
+            },
+            {
+              id: 11,
+              iconfont: "iconfont icon-bilibili",
+              href: "https://www.bilibili.com/",
+              name: "测试4"
+            },
+            {
+              id: 12,
+              iconfont: "iconfont icon-bilibili",
+              href: "https://www.bilibili.com/",
+              name: "测试5"
+            },
+            {
+              id: 13,
+              iconfont: "iconfont icon-bilibili",
+              href: "https://www.bilibili.com/",
+              name: "测试6"
+            },
+            {
+              id: 14,
+              iconfont: "iconfont icon-bilibili",
+              href: "https://www.bilibili.com/",
+              name: "测试7"
+            },
+            {
+              id: 15,
+              iconfont: "iconfont icon-bilibili",
+              href: "https://www.bilibili.com/",
+              name: "测试8"
+            },
+            {
+              id: 16,
+              iconfont: "iconfont icon-bilibili",
+              href: "https://www.bilibili.com/",
+              name: "测试9"
+            },
+            {
+              id: 17,
+              iconfont: "iconfont icon-bilibili",
+              href: "https://www.bilibili.com/",
+              name: "测试10"
+            },
+          ]
+        }
+      },
+      created() {
+        this.getTimes()
+      },
+      // 在Vue实例销毁前，清除的定时器
+      beforeUnmount() {
+        if (this.times) {
+          clearInterval(this.getTimesInterval);
+        }
+      },
+      methods: {
+        getTimes() {
+          setInterval(this.getTimesInterval, 1000);
+        },
+        getTimesInterval: function () {
+          let _this = this;
+          let year = new Date().getFullYear(); //获取当前时间的年份
+          let month = new Date().getMonth() + 1; //获取当前时间的月份
+          let day = new Date().getDate(); //获取当前时间的天数
+          let hours = new Date().getHours(); //获取当前时间的小时
+          let minutes = new Date().getMinutes(); //获取当前时间的分数
+          let seconds = new Date().getSeconds(); //获取当前时间的秒数
+          //当小于 10 的是时候，在前面加 0
+          if (hours < 10) {
+            hours = "0" + hours;
+          }
+          if (minutes < 10) {
+            minutes = "0" + minutes;
+          }
+          if (seconds < 10) {
+            seconds = "0" + seconds;
+          }
+          //拼接格式化当前时间
+          _this.times = hours + ":" + minutes + ":" + seconds;
+        },
+        //输入框状态
+        searchTermsClick() {
+          this.inputCustom1 = 0
+          wh100active1 = 0
+        },
+        searchTermsClickOut() {
+          this.inputCustom1 = 1
+          this.mytext = ''
+        },
+
+        //上传到localStorage
+        searchTermsUp() {
+          localStorage.setItem("username", this.mytext)
+        },
+
+
+        //添加功能模块
+        topButtonAdd(num) {
+          let length = this.changelist.length
+          let length2 = this.datalist.length
+          this.changelist.push(this.datalist[length])
+
+
+          // this.isDisable2++;
+          // if(this.isDisable2 === 29 )
+
+        },
+        FunctionModuleShow(evt) {
+          if (evt.button === 2) {
+            this.isShow = true
+          }
+        }
+      }
+    }
+
+    var vm = Vue.createApp(obj).mount("#box")
+  </script>
+
+  <script type="text/javascript">
+    document.oncontextmenu = function () {
+      console.log("右键已禁用")
+      return false;
+    }
+  </script>
+</body>
+
+</html>

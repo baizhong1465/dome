@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>注册</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <script src='../lib/vue.next.js'></script>
+  <script src='../lib/axios.js'></script>
+  <style>
+    #register {
+      width: 400px;
+      margin: 150px auto
+    }
+
+    #alert_info {
+      margin: 2px;
+      padding: 2px;
+      text-align: center;
+      margin-bottom: 10px;
+      display: none
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="box" class='container'>
+    <div  class='panel panel-primary' id='register'>
+      <div class='panel-heading'>
+        登入
+      </div>
+      <div class='panel-body'>
+        <div class='form-group'>
+          <label for="username">用户名：</label>
+          <input type="text" name='username' class='form-control' v-model.trim="myName">
+        </div>
+        <div class='form-group'>
+          <label for="password">密码：</label>
+          <input type="text" name='password' class='form-control' v-model.trim="myPassword">
+        </div>
+        <div id='alert_info' class='alert alert-danger'>xxxxx</div>
+
+        <a href="./login.html" class=''>马上注册</a>
+        <a :href="http" @click.self.prevent="0">
+          <button id='btn1' @click="userAdd" class='btn btn-primary pull-right'>登入</button>
+        </a>
+        
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <script>
+    var obj = {
+      data() {
+        return {
+          http: "l",
+          myName:localStorage.getItem("myName"),
+          myName: "",
+          myPassword: "",
+          datalist: axios.get("../json/datalist.json").then(res => {
+            // console.log(res.data.datalist)
+            this.datalist = res.data.datalist
+          })
+        }
+      },
+      methods: {
+        userAdd() {
+          var b = this.myName;
+          var c = this.myPassword;
+          var a = this.datalist;
+          if ((a.find(item => { return item.name == b }) != undefined) && (a.find(item => { return item.Password == c }) != undefined)) {
+            alert("成功")
+            this.http = "../index.html"
+          } else {
+            alert("错误")
+            this.http = ""
+          }
+          // localStorage.setItem("myName", this.myName);
+          // console.log(localStorage.getItem("myName"))
+        
+        },
+
+        userPush() {
+        
+        },
+      }
+    }
+    var vm = Vue.createApp(obj).mount("#box")
+  </script>
+</body>
+
+</html>

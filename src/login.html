@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>注册</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <script src='../lib/vue.next.js'></script>
+  <script src='../lib/axios.js'></script>
+  <style>
+    #register {
+      width: 400px;
+      margin: 150px auto
+    }
+
+    #alert_info {
+      margin: 2px;
+      padding: 2px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="box" class='container'>
+    <div class='panel panel-primary' id='register'>
+      <div class='panel-heading'>
+        登入
+      </div>
+      <div class='panel-body'>
+        <div class='form-group'>
+          <label for="username">用户名：</label>
+          <input type="text" name='username' class='form-control' v-model="myName">
+        </div>
+        <div class='form-group'>
+          <label for="password">密码：</label>
+          <input type="text" name='password' class='form-control' v-model="myPassword">
+        </div>
+        <div class='form-group'>
+          <label for="password">确认密码：</label>
+          <input type="text" name='password' class='form-control' v-model="myPasswordConfirm">
+        </div>
+
+        <div id='alert_info' v-show="testShow" class='alert alert-danger'>{{test1}}</div>
+        <a href="./loginSystem.html">马上登入</a>
+        <a :href="http"><button id='btn1' @click="register" class='btn btn-primary pull-right'>注册</button></a>
+        
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <script>
+    var obj = {
+      data() {
+        return {
+          testShow: false,
+          http: "l",
+          test1: "",
+          myName: localStorage.getItem("myName"),
+          myName: "",
+          myPassword: "",
+          myPasswordConfirm: "",
+          datalist: axios.get("../json/datalist.json").then(res => {
+            this.datalist = res.data.datalist
+          }),
+
+          myUser: ""
+        }
+      },
+      methods: {
+        register() {
+          var b = this.myName;
+          var a = this.datalist;
+          var c = this.myPasswordConfirm;
+          var d = this.myPassword;
+
+          var temp1 = true;
+          var temp2 = true;
+          var temp3 = true;
+
+          if (a.find(item => { return item.name == b }) != undefined) {
+            alert('账户已经存在')
+            temp1 = false;
+          } else {
+            temp1 = true;
+          }
+
+          if (c == 0 || b == 0 || d ==0) {
+            temp3 = false;
+            alert("不能为空")
+          }else{
+            temp3 = true;
+          }
+
+          if (c !== d) {
+            temp2 = false;
+            this.testShow = true;
+            this.test1 = "密码不一致"
+          } else {
+            this.testShow = false;
+            this.test1 = ""
+            temp2 = true;
+          }
+
+
+          if (temp1 && temp2 && temp3) {
+            alert('注册成功')
+            this.http = "../index.html"
+          }else {
+            this.http = ""
+          }
+
+      //     "id": 4,
+      // "name": "麻子",
+      // "Password": "12345678"
+        },
+      }
+    }
+    var vm = Vue.createApp(obj).mount("#box")
+  </script>
+</body>
+
+</html>
